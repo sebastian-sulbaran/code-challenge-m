@@ -18,6 +18,7 @@ class CreateRequestsTable extends Migration
             $table->timestamps();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('job_id')->constrained('jobs');
+            $table->softDeletes();
         });
     }
 
