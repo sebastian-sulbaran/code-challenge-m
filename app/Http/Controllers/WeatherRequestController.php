@@ -75,10 +75,12 @@ class WeatherRequestController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        $weather_request = WeatherRequest::findOrFail($id); //apply trycatch blocks
+        $weather_request->delete();
+        $response['data'] = ""; //use a resourse to map the object 
+        return response()->json($response,204);
     }
 }
