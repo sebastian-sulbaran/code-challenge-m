@@ -14,7 +14,9 @@ class WeatherRequestController extends Controller
      */
     public function index(Request $request)
     {
-        //
+        $weather_requests = WeatherRequest::paginate(5);
+        $response['data']['requests'] = $weather_requests;
+        return response()->json($response,200);
     }
 
     /**
