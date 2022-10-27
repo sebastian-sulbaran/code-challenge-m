@@ -42,7 +42,7 @@ class WeatherRequestController extends Controller
         $response['data']['id'] = $weather_request->id;
 
         //$batch->finished();
-        return response()->json($response,200);
+        return response()->json($response,201);
     }
 
     /**
@@ -50,9 +50,12 @@ class WeatherRequestController extends Controller
      *
      * @param  int  $id
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //
+        $weather_request = WeatherRequest::findOrFail($id); //apply trycatch blocks
+        $response['data']['request'] = $weather_request; //use a resourse to map the object 
+        return response()->json($response,200);
+
     }
 
     /**

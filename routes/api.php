@@ -20,3 +20,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/weather', [WeatherRequestController::class, 'store']);
+Route::get('/weather/{id}', [WeatherRequestController::class, 'show']); // apply route groups and validate numeric id
+
