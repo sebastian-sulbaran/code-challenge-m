@@ -88,9 +88,16 @@ class WeatherRequestController extends Controller
      *
      * @param  int  $id
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        $user = $request->user();
+
         $weather_request = WeatherRequest::findOrFail($id); //apply trycatch blocks
+
+        if ($weather_request->user_id != $user->id) {
+            return response()->json(["status" => "error", "message" => "unauthoraized"], 401);
+        }
+        
         $weather_request->delete();
         $response['data'] = ""; //use a resourse to map the object 
         return response()->json($response,204);
