@@ -20,9 +20,11 @@ class CreateRequestsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             //$table->foreignId('user_id')->constrained('users');
             $table->string('job_batch_id')->nullable();
-            $table->string('city')->nullable();
+            $table->string('region_name')->nullable();
 
+            $table->json('conditions')->nullable();
             $table->json('response')->nullable();
+
             // $table->foreignId('batch_id')->constrained('job_batches');
             $table->softDeletes();
         });
