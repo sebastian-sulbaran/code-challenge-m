@@ -3,6 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WeatherRequestController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +27,11 @@ Route::get('/weather', [WeatherRequestController::class, 'index']); // apply rou
 Route::post('/weather', [WeatherRequestController::class, 'store']);
 Route::get('/weather/{id}', [WeatherRequestController::class, 'show']); // apply route groups and validate numeric id
 Route::delete('/weather/{id}', [WeatherRequestController::class, 'destroy']); // apply route groups and validate numeric id
+
+Route::post('/register', [UserController::class, 'store']);
+
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout']);
+Route::get('/me', [AuthController::class, 'me']);
+
+
