@@ -45,4 +45,21 @@ class AuthController extends Controller
         }
     }
 
+    public function logout(Request $request) {
+        $user = $request->user();
+        $user->tokens()->delete();
+        try {
+            return response([
+                'message' => 'User was logged out succesfully',
+                'status' => 'success'
+            ],200);
+        } catch (\Throwable $th) {
+            return response([
+                'message' => 'User could not be logged out',
+                'status' => 'error',
+                'error' => $th
+            ],400);
+        }
+    }
+
 }
