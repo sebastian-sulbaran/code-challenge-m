@@ -15,8 +15,14 @@ class WeatherRequestController extends Controller
      */
     public function index(Request $request)
     {
-        $weather_requests = WeatherRequest::paginate(5);
+        $user = $request->user();
+        
+        $weather_requests = WeatherRequest::whereHas('user', function ($query) use ($user) {
+            $query->where('id', $user->id);
+        })->paginate(5);
+
         $response['data']['requests'] = $weather_requests;
+        
         return response()->json($response,200);
     }
 

@@ -10,4 +10,9 @@ class WeatherRequest extends Model
 {
     use HasFactory, SoftDeletes;
     protected $table = 'requests';
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, "user_id", "id");
+    }
 }

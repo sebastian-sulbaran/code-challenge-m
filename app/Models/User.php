@@ -33,4 +33,9 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function requests()
+    {
+        return $this->hasMany(WeatherRequest::class, "user_id", "id");
+    }
+
 }
