@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -24,7 +25,38 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'name' => 'required|string|max:40',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|confirmed',
+        ]);
+
+        try {
+        
+            $user = new User;
+
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = bcrypt($request->password);
+            $user->save();
+
+            $response = [
+                'user' => $user,
+                'message' => 'User was created succesfully',
+                'status' => 'success'
+            ];
+
+            return response($response,201);
+        
+        } catch (\Throwable $th) {
+            return response([
+                'message' => 'Something happened while creating an user',
+                'status' => "error",
+                'error' => $th->getMessage()
+            ],400);
+        }
+
     }
 
     /**

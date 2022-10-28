@@ -20,6 +20,7 @@ class AuthController extends Controller
     }
 
     public function login(Request $request) {
+        
         $request->validate([
             'email' => 'string|email|required',
             'password' => 'string|required|max:20',
@@ -76,7 +77,7 @@ class AuthController extends Controller
                 'error' => $th
             ],400);
         }
-        
+
     }
 
     public function me(Request $request)
