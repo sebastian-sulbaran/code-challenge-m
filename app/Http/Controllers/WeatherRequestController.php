@@ -59,7 +59,14 @@ class WeatherRequestController extends Controller
      */
     public function show(Request $request, $id)
     {
+        $user = $request->user();
+
         $weather_request = WeatherRequest::findOrFail($id); //apply trycatch blocks
+        
+        if ($weather_request->user_id != $user->id) {
+            return response()->json(["status" => "error", "message" => "unauthoraized"], 401);
+        }
+
         $response['data']['request'] = $weather_request; //use a resourse to map the object 
         return response()->json($response,200);
 
