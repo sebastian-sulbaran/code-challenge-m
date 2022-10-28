@@ -5,8 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WeatherRequestController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
-
-
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +34,7 @@ Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('/me', [AuthController::class, 'me']);
 
 Route::middleware('auth:sanctum')->post('/weather/{id}/comments', [CommentController::class, 'store']);
-Route::middleware('auth:sanctum')->get('/weather/{id}/comments', [CommentController::class, 'store']);
-Route::middleware('auth:sanctum')->delete('/comments/{id}', [CommentController::class, 'store']);
+Route::middleware('auth:sanctum')->get('/weather/{id}/comments', [CommentController::class, 'index']);
+Route::middleware('auth:sanctum')->delete('/comments/{id}', [CommentController::class, 'destroy']);
 
 

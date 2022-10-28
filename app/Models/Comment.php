@@ -9,8 +9,13 @@ class Comment extends Model
 {
     use HasFactory;
 
-    public function request()
+    public function parent()
     {
         return $this->morphTo();
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, "user_id", "id");
     }
 }
