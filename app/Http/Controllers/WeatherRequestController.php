@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Jobs\WeatherStatus;
 use App\Models\WeatherRequest;
 use Illuminate\Support\Facades\Bus;
+
 class WeatherRequestController extends Controller
 {
     /**
@@ -36,11 +37,9 @@ class WeatherRequestController extends Controller
         $weather_request = new WeatherRequest;
 
         $weather_request->user_id = $user ? $user->id : null; 
-        $weather_request->city = $request->city;
         $weather_request->save();
-        
         $transaction = WeatherStatus::dispatch($weather_request, $request->city); //implementar con batch
-
+        dd($transaction);
         $response['data']['id'] = $weather_request->id;
 
         //$batch->finished();

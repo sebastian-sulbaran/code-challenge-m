@@ -32,9 +32,8 @@ class WeatherStatus implements ShouldQueue
     {
         $this->weather_request = $weather_request;
         // $this->url = $weather_request->city;
-        $this->url = "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m,relativehumidity_2m,windspeed_10m";
+        $this->url = $url;
 
-        // $this->client = new GuzzleHttpRequest();
     }
 
     /**
@@ -45,8 +44,10 @@ class WeatherStatus implements ShouldQueue
     public function handle()
     {
         // $this->weather_request->response = json_encode(["bla" => "bla"]);
-        $this->weather_request->response = $response = (Http::get($this->url))->getBody()->getContents();
-
+        $this->weather_request->response = $response = (Http::get(env('API_URL'),[ "city" => $this->url]))->getBody()->getContents();
+        $response = json_decode($response)[0];
+        $this->weather_request->region_name = $response->region_name;
+        $this->weather_request->conditions = json_encode($response->current_conditions); 
         $this->weather_request->update();
     }
 }
