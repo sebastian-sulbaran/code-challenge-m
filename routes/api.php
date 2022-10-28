@@ -34,4 +34,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('/me', [AuthController::class, 'me']);
 
+Route::middleware('auth:sanctum')->post('/weather/{id}/comments', [CommentController::class, 'store']);
+Route::middleware('auth:sanctum')->get('/weather/{id}/comments', [CommentController::class, 'store']);
+Route::middleware('auth:sanctum')->delete('/comments/{id}', [CommentController::class, 'store']);
+
 
