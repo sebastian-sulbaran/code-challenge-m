@@ -8,6 +8,17 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['login']]);
+    }
+
     public function login(Request $request) {
         $request->validate([
             'email' => 'string|email|required',
