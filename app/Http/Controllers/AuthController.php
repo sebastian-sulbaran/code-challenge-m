@@ -36,16 +36,17 @@ class AuthController extends Controller
             ],401);
         }
 
-        $token = $user->createToken($request->email,['test','newAbility'])->plainTextToken;
-
-        $response = [
-            'user' => $user,
-            'token' => $token,
-            'message' => 'User was logged in succesfully',
-            'status' => "success"
-        ];
-
         try {
+
+            $token = $user->createToken($request->email,['test','newAbility'])->plainTextToken;
+
+            $response = [
+                'user' => $user,
+                'token' => $token,
+                'message' => 'User was logged in succesfully',
+                'status' => "success"
+            ];
+
             return response($response,200);
         } catch (\Throwable $th) {
             return response([
@@ -57,13 +58,17 @@ class AuthController extends Controller
     }
 
     public function logout(Request $request) {
-        $user = $request->user();
-        $user->tokens()->delete();
+        
         try {
+            
+            $user = $request->user();
+            $user->tokens()->delete();
+            
             return response([
                 'message' => 'User was logged out succesfully',
                 'status' => 'success'
             ],200);
+        
         } catch (\Throwable $th) {
             return response([
                 'message' => 'User could not be logged out',
@@ -71,6 +76,7 @@ class AuthController extends Controller
                 'error' => $th
             ],400);
         }
+        
     }
 
     public function me(Request $request)
