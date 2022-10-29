@@ -45,7 +45,6 @@ class WeatherRequestController extends Controller
         $weather_request->user_id = $user ? $user->id : null; 
         $weather_request->save();
         $transaction = WeatherStatus::dispatch($weather_request, $request->city); //implementar con batch
-        dd($transaction);
         $response['data']['id'] = $weather_request->id;
 
         //$batch->finished();
@@ -97,7 +96,7 @@ class WeatherRequestController extends Controller
         if ($weather_request->user_id != $user->id) {
             return response()->json(["status" => "error", "message" => "unauthoraized"], 401);
         }
-        
+
         $weather_request->delete();
         $response['data'] = ""; //use a resourse to map the object 
         return response()->json($response,204);
